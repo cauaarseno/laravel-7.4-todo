@@ -99,4 +99,33 @@ class TodoController extends Controller
 
         return redirect('/dashboard')->with('success', 'TODO deletado com sucesso');
     }
+
+    public function edit($id)
+    {
+        $todo = Todo::find($id);
+        $user = auth()->user();
+
+        if ($todo->user_id !== $user->id) {
+            return response('', 404);
+        }
+
+        return view('edit', compact('todo'));
+    }
+
+    public function update($id, Request $request)
+    {
+        $todo = Todo::find($id);
+        $user = auth()->user();
+
+        if ($todo->user_id !== $user->id) {
+            return response('', 404);
+        }
+
+        $todo->update([
+            'title' => $request->title,
+            'color' => $request->color
+        ]);
+
+        return redirect('/dashboard');
+    }
 }
