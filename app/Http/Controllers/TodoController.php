@@ -106,7 +106,7 @@ class TodoController extends Controller
         $user = auth()->user();
 
         if ($todo->user_id !== $user->id) {
-            return response('', 404);
+            return response('', 403);
         }
 
         return view('edit', compact('todo'));
@@ -118,7 +118,7 @@ class TodoController extends Controller
         $user = auth()->user();
 
         if ($todo->user_id !== $user->id) {
-            return response('', 404);
+            return response('', 403);
         }
 
         $todo->update([
